@@ -1,183 +1,112 @@
-﻿using BepInEx;
-using Kitchen;
-using KitchenData;
+﻿using KitchenData;
 using KitchenLib;
 using KitchenLib.Customs;
-using KitchenLib.Event;
-using KitchenLib.References;
+using KitchenLib.Reference;
 using KitchenLib.Utils;
 using PastaPalace.Customs.NoodleChain;
 using PastaPalace.Customs.PastaProcess;
 using PastaPalace.Customs.RedSauceChain;
 using PastaPalace.Customs.WhiteSauceChain;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System;
 using System.Reflection;
 using UnityEngine;
+using ItemReference = KitchenLib.Reference.ItemReference;
 
 namespace PastaPalace
 {
-    /*
-     *  James' Pasta Palace introduces the delicious flavors of Italy to PlateUp!
-     *      Pasta is a special challenge, impossible to fully automate and requiring the cook 
-     *  to carefully balance multiple pots of simmering noodles, tasty toppings and 
-     *  bubbling sauce to please ever-choosier customers.
-     *  
-     *  The Pasta Main Dish currently comes with:
-     *  Two Sauces (Red and White)
-     *  Two Toppings (Broccoli and Meat) (WIP)
-     *  
-     *  To Come:
-     *  More Sauces and Toppings!
-     */
-
-    [BepInProcess("PlateUp.exe")]
-    [BepInPlugin(MOD_ID, MOD_NAME, MOD_VERSION)]
     public class Mod : BaseMod
     {
-        public const string MOD_ID = "pastapalace";
-        public const string MOD_NAME = "Pasta Palace";
-        public const string MOD_VERSION = "0.0.1";
+        internal const string MOD_NAME = "Pasta Palace";
+        internal const string MOD_VERSION = "1.0.0";
+        internal const string MOD_AUTHOR = "";
+        internal const string PLATEUP_VERSION = "1.1.2";
 
-        internal static Item Flour => GetExistingGDO<Item>(ItemReferences.Flour);
-        internal static Item EggCracked => GetExistingGDO<Item>(ItemReferences.EggCracked);
-        internal static Item Water => GetExistingGDO<Item>(ItemReferences.Water);
-        internal static Item Pot => GetExistingGDO<Item>(ItemReferences.Pot);
-        internal static Item Onion => GetExistingGDO<Item>(ItemReferences.Onion);
-        internal static Item TomatoSauce => GetExistingGDO<Item>(ItemReferences.TomatoSauce);
-        internal static Item Cheese => GetExistingGDO<Item>(ItemReferences.Cheese);
-        internal static Item BroccoliChoppedContainerCooked => GetExistingGDO<Item>(ItemReferences.BroccoliChoppedContainerCooked);
-        internal static Item MeatChoppedContainerCooked => GetExistingGDO<Item>(ItemReferences.MeatChoppedContainerCooked);
-        internal static Item Plate => GetExistingGDO<Item>(ItemReferences.Plate);
-        internal static Item Egg => GetExistingGDO<Item>(ItemReferences.Egg);
-        internal static Item Tomato => GetExistingGDO<Item>(ItemReferences.Tomato);
+        internal static Item Flour => GetExistingGDO<Item>(ItemReference.Flour);
+        internal static Item EggCracked => GetExistingGDO<Item>(ItemReference.EggCracked);
+        internal static Item Water => GetExistingGDO<Item>(ItemReference.Water);
+        internal static Item Pot => GetExistingGDO<Item>(ItemReference.Pot);
+        internal static Item Onion => GetExistingGDO<Item>(ItemReference.Onion);
+        internal static Item TomatoSauce => GetExistingGDO<Item>(ItemReference.TomatoSauce);
+        internal static Item Cheese => GetExistingGDO<Item>(ItemReference.Cheese);
+        internal static Item BroccoliChoppedContainerCooked => GetExistingGDO<Item>(ItemReference.BroccoliChoppedContainerCooked);
+        internal static Item MeatChoppedContainerCooked => GetExistingGDO<Item>(ItemReference.MeatChoppedContainerCooked);
+        internal static Item Plate => GetExistingGDO<Item>(ItemReference.Plate);
+        internal static Item Egg => GetExistingGDO<Item>(ItemReference.Egg);
+        internal static Item Tomato => GetExistingGDO<Item>(ItemReference.Tomato);
 
-        internal static Process Cook => GetExistingGDO<Process>(ProcessReferences.Cook);
-        internal static Process Chop => GetExistingGDO<Process>(ProcessReferences.Chop);
+        internal static Process Cook => GetExistingGDO<Process>(ProcessReference.Cook);
+        internal static Process Chop => GetExistingGDO<Process>(ProcessReference.Chop);
 
-        internal static int RawNoodlesID;
-        internal static int RawNoodlePotID;
-        internal static int CookedNoodlesID;
-        internal static int CookedNoodlePotID;
-        internal static int BurntNoodlePotID;
-        internal static ItemGroup RawNoodles;
-        internal static ItemGroup RawNoodlePot;
-        internal static Item CookedNoodles;
-        internal static Item CookedNoodlePot;
-        internal static Item BurntNoodlePot;
+        internal static ItemGroup RawNoodles => GetModdedGDO<ItemGroup, RawNoodles>();
+        internal static ItemGroup RawNoodlePot => GetModdedGDO<ItemGroup, RawNoodlePot>();
+        internal static Item CookedNoodles => GetModdedGDO<Item, CookedNoodles>();
+        internal static Item CookedNoodlePot => GetModdedGDO<Item, CookedNoodlePot>();
+        internal static Item BurntNoodlePot => GetModdedGDO<Item, BurntNoodlePot>();
 
-        internal static int UncookedRedSauceID;
-        internal static int ServedRedSauceID;
-        internal static int CookedRedSauceID;
-        internal static ItemGroup UncookedRedSauce;
-        internal static Item ServedRedSauce;
-        internal static Item CookedRedSauce;
+        internal static ItemGroup UncookedRedSauce => GetModdedGDO<ItemGroup, UncookedRedSauce>();
+        internal static Item ServedRedSauce => GetModdedGDO<Item, ServedRedSauce>();
+        internal static Item CookedRedSauce => GetModdedGDO<Item, CookedRedSauce>();
 
-        internal static int UncookedWhiteSauceID;
-        internal static int ServedWhiteSauceID;
-        internal static int CookedWhiteSauceID;
-        internal static ItemGroup UncookedWhiteSauce;
-        internal static Item ServedWhiteSauce;
-        internal static Item CookedWhiteSauce;
+        internal static ItemGroup UncookedWhiteSauce => GetModdedGDO<ItemGroup, UncookedWhiteSauce>();
+        internal static Item ServedWhiteSauce => GetModdedGDO <Item, ServedWhiteSauce>();
+        internal static Item CookedWhiteSauce => GetModdedGDO <Item, CookedWhiteSauce>();
 
-        internal static int PlatedPastaID;
-        internal static int PastaBaseID;
-        internal static int PastaWhiteID;
-        internal static ItemGroup PlatedPasta;
-        internal static Dish PastaBase;
-        internal static Dish PastaWhite;
+        internal static ItemGroup PlatedPasta => GetModdedGDO <ItemGroup, PlatedPasta>();
+        internal static Dish PastaBase => GetModdedGDO <Dish, PastaBase>();
+        internal static Dish PastaWhite => GetModdedGDO <Dish, PastaWhite>();
 
-        internal static GameData gamedata;
         internal static AssetBundle bundle;
+        internal static bool debug = true;
 
-        public Mod() : base($">={MOD_VERSION}", Assembly.GetCallingAssembly())
+        public Mod() : base(MOD_NAME, MOD_VERSION, $"{PLATEUP_VERSION}", Assembly.GetExecutingAssembly())
         {
-            bundle = AssetBundle.LoadFromFile(Path.Combine(new string[] { Directory.GetParent(Application.dataPath).FullName, "BepInEx", "plugins", "PastaPalace", "assets", "pastapalacetextures" }));
-            //bundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "pastapalacetextures"));
-            Debug.Log($"Loaded Textures: {bundle != null}");
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string commons = Uri.UnescapeDataString(uri.Path);
+            string steamapps = Directory.GetParent(commons).FullName;
+            string workshop = Path.Combine(steamapps, "workshop");
+            string content = Path.Combine(workshop, "content");
+            string bundlePath = "";
 
-            Events.BuildGameDataEvent += OnBuildGameDataEvent;
+            if (debug) 
+                bundlePath = Path.Combine(new string[] { Directory.GetParent(Application.dataPath).FullName, "BepInEx", "plugins", "PastaPalace", "assets", "pastapalacetextures" });
+
+            bundle = AssetBundle.LoadFromFile(bundlePath);
+            Debug.Log($"{MOD_NAME} {MOD_VERSION} {MOD_AUTHOR}: Loaded");
         }
 
-        void Start()
+        protected override void Initialise()
         {
-            /* 
-            * Noodle Chain:
-            * Mix flour with cracked egg. 
-            * Add water and raw noodle to pot.
-            * Cook and portion onto plate. Serves 6.
-            */
-            RawNoodlesID = AddGameDataObject<RawNoodles>().ID;
-            CookedNoodlesID = AddGameDataObject<CookedNoodles>().ID;
-            BurntNoodlePotID = AddGameDataObject<BurntNoodlePot>().ID;
-            RawNoodlePotID = AddGameDataObject<RawNoodlePot>().ID;
-            CookedNoodlePotID = AddGameDataObject<CookedNoodlePot>().ID;
-            Debug.Log("Loaded Noodles.");
+            base.Initialise();
 
-            /*
-            * Red Sauce Chain
-            * Add Onion, Tomato Sauce to pot and cook. 
-            * Pour onto cooked noodles. Serves 4.
-            */
-            UncookedRedSauceID = AddGameDataObject<UncookedRedSauce>().ID;
-            CookedRedSauceID = AddGameDataObject<CookedRedSauce>().ID;
-            ServedRedSauceID = AddGameDataObject<ServedRedSauce>().ID;
-            Debug.Log("Loaded Red Sauce.");
+            AddGameDataObject<RawNoodles>();
+            AddGameDataObject<CookedNoodles>();
+            AddGameDataObject<BurntNoodlePot>();
+            AddGameDataObject<RawNoodlePot>();
+            AddGameDataObject<CookedNoodlePot>();
 
-            /*
-            * White Sauce Chain
-            * Add Onion, Cheese to pot and cook. 
-            * Pour onto cooked noodles. Serves 4.
-            */
-            UncookedWhiteSauceID = AddGameDataObject<UncookedWhiteSauce>().ID;
-            CookedWhiteSauceID = AddGameDataObject<CookedWhiteSauce>().ID;
-            ServedWhiteSauceID = AddGameDataObject<ServedWhiteSauce>().ID;
-            Debug.Log("Loaded White Sauce.");
+            AddGameDataObject<UncookedRedSauce>();
+            AddGameDataObject<CookedRedSauce>();
+            AddGameDataObject<ServedRedSauce>();
 
-            /*
-            * Pasta Process:
-            * Add Cooked Noodles
-            * Add Red or White Sauce
-            * (Optional) Add topping
-            * Serve
-            */
-            PlatedPastaID = AddGameDataObject<PlatedPasta>().ID;
-            PastaBaseID = AddGameDataObject<PastaBase>().ID;
-            PastaWhiteID = AddGameDataObject<PastaWhite>().ID;
-            Debug.Log("Loaded Dish.");
+            AddGameDataObject<UncookedWhiteSauce>();
+            AddGameDataObject<CookedWhiteSauce>();
+            AddGameDataObject<ServedWhiteSauce>();
+
+            AddGameDataObject<PlatedPasta>();
+            AddGameDataObject<PastaBase>();
+            AddGameDataObject<PastaWhite>();
         }
 
-        private void OnBuildGameDataEvent(object sender, BuildGameDataEventArgs e)
+        protected override void OnUpdate() { }
+
+        private static T1 GetModdedGDO<T1, T2>() where T1 : GameDataObject
         {
-            gamedata = e.gamedata;
-
-            RawNoodles = GetModdedGDO<ItemGroup>(RawNoodlesID);
-            CookedNoodles = GetModdedGDO<Item>(CookedNoodlesID);
-            BurntNoodlePot = GetModdedGDO<Item>(BurntNoodlePotID);
-            RawNoodlePot = GetModdedGDO<ItemGroup>(RawNoodlePotID);
-            CookedNoodlePot = GetModdedGDO<Item>(CookedNoodlePotID);
-
-            UncookedRedSauce = GetModdedGDO<ItemGroup>(UncookedRedSauceID);
-            CookedRedSauce = GetModdedGDO<Item>(CookedRedSauceID);
-            ServedRedSauce = GetModdedGDO<Item>(ServedRedSauceID);
-
-            UncookedWhiteSauce = GetModdedGDO<ItemGroup>(UncookedWhiteSauceID);
-            CookedWhiteSauce = GetModdedGDO<Item>(CookedWhiteSauceID);
-            ServedWhiteSauce = GetModdedGDO<Item>(ServedWhiteSauceID);
-
-            PlatedPasta = GetModdedGDO<ItemGroup>(PlatedPastaID);
-            PastaBase = GetModdedGDO<Dish>(PastaBaseID);
-            PastaWhite = GetModdedGDO<Dish>(PastaWhiteID);
+            return (T1)CustomGDO.GetGameDataObject<T2>().GameDataObject;
         }
 
-        internal static T GetModdedGDO<T>(int id) where T: GameDataObject
-        {
-            CustomGDO.GetGameDataObject(id).Convert(Mod.gamedata, out GameDataObject gdo);
-            return (T)gdo;
-        }
-
-        private static T GetExistingGDO<T>(int id) where T: GameDataObject
+        private static T GetExistingGDO<T>(int id) where T : GameDataObject
         {
             return (T)GDOUtils.GetExistingGDO(id);
         }

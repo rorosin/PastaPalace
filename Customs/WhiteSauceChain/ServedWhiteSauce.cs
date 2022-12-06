@@ -7,7 +7,7 @@ namespace PastaPalace.Customs.WhiteSauceChain
     internal class ServedWhiteSauce : CustomItem
     {
         public override string UniqueNameID => "ServedWhiteSauce";
-        public override GameObject Prefab => (GameObject)Mod.bundle.LoadAsset("sauce");
+        public override GameObject Prefab => Mod.Tomato.Prefab;
         public override ItemCategory ItemCategory => ItemCategory.Generic;
         public override ItemStorage ItemStorageFlags => ItemStorage.None;
 

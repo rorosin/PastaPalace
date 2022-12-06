@@ -8,7 +8,7 @@ namespace PastaPalace.Customs.NoodleChain
     internal class CookedNoodlePot : CustomItem
     {
         public override string UniqueNameID => "CookedNoodlePot";
-        public override GameObject Prefab => Mod.Tomato.Prefab;
+        public override GameObject Prefab => (GameObject)Mod.bundle.LoadAsset("Noodles_-_Pot_Cooked");
         public override Item DisposesTo => Mod.Pot;
         public override int SplitCount => 6;
         public override Item SplitSubItem => Mod.CookedNoodles;

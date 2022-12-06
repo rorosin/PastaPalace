@@ -8,7 +8,7 @@ namespace PastaPalace.Customs.NoodleChain
     internal class RawNoodles : CustomItemGroup
     {
         public override string UniqueNameID => "RawNoodles";
-        public override GameObject Prefab => Mod.Tomato.Prefab;
+        public override GameObject Prefab => (GameObject)Mod.bundle.LoadAsset("Spaghetti");
         public override ItemCategory ItemCategory => ItemCategory.Generic;
         public override ItemStorage ItemStorageFlags => ItemStorage.StackableFood;
         public override List<ItemGroup.ItemSet> Sets => new List<ItemGroup.ItemSet>()
