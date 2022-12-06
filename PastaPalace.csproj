@@ -1,128 +1,115 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6CA1A232-6955-4F47-B097-1E3201F57A6A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PastaPalace</RootNamespace>
-    <AssemblyName>PastaPalace</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="BepInEx">
-      <HintPath>..\Libraries\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.Common">
-      <HintPath>..\Libraries\Kitchen.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.FranchiseBuilderMode">
-      <HintPath>..\Libraries\Kitchen.FranchiseBuilderMode.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.FranchiseMode">
-      <HintPath>..\Libraries\Kitchen.FranchiseMode.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.GameData">
-      <HintPath>..\Libraries\Kitchen.GameData.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.Layouts">
-      <HintPath>..\Libraries\Kitchen.Layouts.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.Networking">
-      <HintPath>..\Libraries\Kitchen.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.Persistence">
-      <HintPath>..\Libraries\Kitchen.Persistence.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.PostgameMode">
-      <HintPath>..\Libraries\Kitchen.PostgameMode.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.ResearchMode">
-      <HintPath>..\Libraries\Kitchen.ResearchMode.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.RestaurantMode">
-      <HintPath>..\Libraries\Kitchen.RestaurantMode.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.TutorialMode">
-      <HintPath>..\Libraries\Kitchen.TutorialMode.dll</HintPath>
-    </Reference>
-    <Reference Include="KitchenLib-BepInEx">
-      <HintPath>..\Libraries\KitchenLib-BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.OdinInspector.Attributes">
-      <HintPath>..\Libraries\Sirenix.OdinInspector.Attributes.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.OdinInspector.CompatibilityLayer">
-      <HintPath>..\Libraries\Sirenix.OdinInspector.CompatibilityLayer.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Serialization">
-      <HintPath>..\Libraries\Sirenix.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Serialization.Config">
-      <HintPath>..\Libraries\Sirenix.Serialization.Config.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Utilities">
-      <HintPath>..\Libraries\Sirenix.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Unity.Entities">
-      <HintPath>..\Libraries\Unity.Entities.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\Libraries\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\Libraries\UnityEngine.AssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\Libraries\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\Libraries\UnityEngine.InputLegacyModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\Libraries\UnityEngine.UI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Customs\CustomItemGroup\RawNoodles.cs" />
-    <Compile Include="Mod.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<RootNamespace>YariazenCore</RootNamespace>
+		<LibraryPath>D:\Program Files (x86)\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed</LibraryPath>
+		<ModsPath>D:\Program Files (x86)\Steam\steamapps\common\PlateUp\PlateUp\Mods</ModsPath>
+		<BepInExPath>D:\Program Files (x86)\Steam\steamapps\common\PlateUp\PlateUp\BepInEx</BepInExPath>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="Kitchen.Common">
+			<HintPath>$(LibraryPath)\Kitchen.Common.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.FranchiseBuilderMode">
+			<HintPath>$(LibraryPath)\Kitchen.FranchiseBuilderMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.FranchiseMode">
+			<HintPath>$(LibraryPath)\Kitchen.FranchiseMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.GameData">
+			<HintPath>$(LibraryPath)\Kitchen.GameData.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.Layouts">
+			<HintPath>$(LibraryPath)\Kitchen.Layouts.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.Networking">
+			<HintPath>$(LibraryPath)\Kitchen.Networking.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.Persistence">
+			<HintPath>$(LibraryPath)\Kitchen.Persistence.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.PostgameMode">
+			<HintPath>$(LibraryPath)\Kitchen.PostgameMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.ResearchMode">
+			<HintPath>$(LibraryPath)\Kitchen.ResearchMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.RestaurantMode">
+			<HintPath>$(LibraryPath)\Kitchen.RestaurantMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Kitchen.TutorialMode">
+			<HintPath>$(LibraryPath)\Kitchen.TutorialMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="KitchenMode">
+			<HintPath>$(LibraryPath)\KitchenMode.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="KitchenMods">
+			<HintPath>$(LibraryPath)\KitchenMods.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Unity.Collections">
+			<HintPath>$(LibraryPath)\Unity.Collections.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Unity.Entities">
+			<HintPath>$(LibraryPath)\Unity.Entities.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(LibraryPath)\UnityEngine.CoreModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="Sirenix.Serialization">
+			<HintPath>$(LibraryPath)\Sirenix.Serialization.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="KitchenLib">
+			<HintPath>$(BepInExPath)\plugins\KitchenLib-BepInEx.dll</HintPath>
+			<Private>true</Private>
+		</Reference>
+
+		<Reference Include="BepInEx">
+			<HintPath>$(BepInExPath)\core\BepInEx.dll</HintPath>
+		</Reference>
+
+		<Reference Include="UnityEngine">
+			<HintPath>$(LibraryPath)\UnityEngine.dll</HintPath>
+		</Reference>
+
+		<Reference Include="UnityEngine.AssetBundleModule">
+			<HintPath>$(LibraryPath)\UnityEngine.AssetBundleModule.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 </Project>

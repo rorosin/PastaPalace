@@ -9,7 +9,7 @@ namespace PastaPalace.Customs.RedSauceChain
     internal class CookedRedSauce : CustomItem
     {
         public override string UniqueNameID => "CookedRedSauce";
-        public override GameObject Prefab => throw new System.NotImplementedException();
+        public override GameObject Prefab => ((Item)GDOUtils.GetExistingGDO(Mod.TomatoID)).Prefab;
         public override Item DisposesTo => (Item)GDOUtils.GetExistingGDO(Mod.PotID);
         public override int SplitCount => 6;
         public override bool PreventExplicitSplit => true;

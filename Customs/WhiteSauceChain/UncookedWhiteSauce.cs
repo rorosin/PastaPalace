@@ -9,7 +9,7 @@ namespace PastaPalace.Customs.WhiteSauceChain
     public class UncookedWhiteSauce : CustomItemGroup
     {
         public override string UniqueNameID => "RawWhiteSauce";
-        public override GameObject Prefab => throw new System.NotImplementedException();
+        public override GameObject Prefab => ((Item)GDOUtils.GetExistingGDO(Mod.TomatoID)).Prefab;
         public override Item DisposesTo => (Item)GDOUtils.GetExistingGDO(Mod.PotID);
         public override ItemCategory ItemCategory => ItemCategory.Generic;
         public override ItemStorage ItemStorageFlags => ItemStorage.None;

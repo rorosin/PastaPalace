@@ -9,7 +9,7 @@ namespace PastaPalace.Customs.PastaProcess
     internal class PlatedPasta : CustomItemGroup
     {
         public override string UniqueNameID => "Plated Pasta";
-        public override GameObject Prefab => throw new System.NotImplementedException();
+        public override GameObject Prefab => ((Item)GDOUtils.GetExistingGDO(Mod.TomatoID)).Prefab;
         public override ItemCategory ItemCategory => ItemCategory.Generic;
         public override ItemStorage ItemStorageFlags => ItemStorage.None;
         public override List<ItemGroup.ItemSet> Sets => new List<ItemGroup.ItemSet>
@@ -20,7 +20,7 @@ namespace PastaPalace.Customs.PastaProcess
                 Min = 1,
                 Items = new List<Item>
                 {
-                    (Item)GDOUtils.GetExistingGDO(Mod.CookedNoodlesID);
+                    (Item)GDOUtils.GetExistingGDO(Mod.CookedNoodles.ID)
                 }
             },
             new ItemGroup.ItemSet

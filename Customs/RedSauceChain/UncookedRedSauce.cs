@@ -9,7 +9,7 @@ namespace PastaPalace.Customs.RedSauceChain
     internal class UncookedRedSauce : CustomItemGroup
     {
         public override string UniqueNameID => "RawRedSauce";
-        public override GameObject Prefab => throw new System.NotImplementedException();
+        public override GameObject Prefab => ((Item)GDOUtils.GetExistingGDO(Mod.TomatoID)).Prefab;
         public override Item DisposesTo => (Item)GDOUtils.GetExistingGDO(Mod.PotID);
         public override ItemCategory ItemCategory => ItemCategory.Generic;
         public override ItemStorage ItemStorageFlags => ItemStorage.None;
@@ -41,7 +41,7 @@ namespace PastaPalace.Customs.RedSauceChain
             {
                 Duration = 6,
                 Process = (Process)GDOUtils.GetExistingGDO(Mod.CookID),
-                Result = (Item)GDOUtils.GetExistingGDO(Mod.CookedRedSauceID);
+                Result = (Item)GDOUtils.GetExistingGDO(Mod.CookedRedSauceID)
             }
         };
     }
