@@ -1,6 +1,5 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
-using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace PastaPalace.Customs.PastaProcess
     internal class PlatedPasta : CustomItemGroup
     {
         public override string UniqueNameID => "Plated Pasta";
-        public override GameObject Prefab => throw new System.NotImplementedException();
+        public override GameObject Prefab => Mod.Tomato.Prefab;
         public override ItemCategory ItemCategory => ItemCategory.Generic;
         public override ItemStorage ItemStorageFlags => ItemStorage.None;
         public override List<ItemGroup.ItemSet> Sets => new List<ItemGroup.ItemSet>
@@ -20,7 +19,7 @@ namespace PastaPalace.Customs.PastaProcess
                 Min = 1,
                 Items = new List<Item>
                 {
-                    (Item)GDOUtils.GetExistingGDO(Mod.CookedNoodlesID);
+                    Mod.CookedNoodles
                 }
             },
             new ItemGroup.ItemSet
@@ -30,8 +29,8 @@ namespace PastaPalace.Customs.PastaProcess
                 RequiresUnlock = true,
                 Items = new List<Item>
                 {
-                    (Item)GDOUtils.GetExistingGDO(Mod.ServedRedSauceID),
-                    (Item)GDOUtils.GetExistingGDO(Mod.ServedWhiteSauceID)
+                    Mod.ServedRedSauce,
+                    Mod.ServedWhiteSauce
                 }
             },
             new ItemGroup.ItemSet
@@ -40,8 +39,8 @@ namespace PastaPalace.Customs.PastaProcess
                 Min = 0,
                 Items = new List<Item>
                 {
-                    (Item)GDOUtils.GetExistingGDO(Mod.BroccoliChoppedContainerCookedID),
-                    (Item)GDOUtils.GetExistingGDO(Mod.MeatChoppedContainerCookedID)
+                    Mod.BroccoliChoppedContainerCooked,
+                    Mod.MeatChoppedContainerCooked
                 }
             },
             new ItemGroup.ItemSet
@@ -50,7 +49,7 @@ namespace PastaPalace.Customs.PastaProcess
                 Min = 1,
                 Items = new List<Item>
                 {
-                    (Item)GDOUtils.GetExistingGDO(Mod.PlateID)
+                    Mod.Plate
                 }
             }
         };

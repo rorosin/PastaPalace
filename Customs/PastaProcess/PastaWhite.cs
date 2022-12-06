@@ -1,6 +1,5 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
-using KitchenLib.Utils;
 using System.Collections.Generic;
 
 namespace PastaPalace.Customs.PastaProcess
@@ -17,37 +16,37 @@ namespace PastaPalace.Customs.PastaProcess
         {
             new Dish.MenuItem
             {
-                Item = (Item)GDOUtils.GetExistingGDO(Mod.PlatedPastaID)
+                Item = Mod.PlatedPasta
             }
         };
         public override HashSet<Dish.IngredientUnlock> IngredientsUnlocks => new HashSet<Dish.IngredientUnlock>
         {
             new Dish.IngredientUnlock
             {
-                Ingredient = (Item)GDOUtils.GetExistingGDO(Mod.ServedWhiteSauceID),
-                MenuItem = (ItemGroup)GDOUtils.GetExistingGDO(Mod.PlatedPastaID)
+                Ingredient = Mod.ServedWhiteSauce,
+                MenuItem = Mod.PlatedPasta
             }
         };
         public override HashSet<Item> MinimumIngredients => new HashSet<Item>
         {
-            (Item)GDOUtils.GetExistingGDO(Mod.FlourID),
-            (Item)GDOUtils.GetExistingGDO(Mod.EggID),
-            (Item)GDOUtils.GetExistingGDO(Mod.CheeseID),
-            (Item)GDOUtils.GetExistingGDO(Mod.OnionID),
-            (Item)GDOUtils.GetExistingGDO(Mod.WaterID)
+            Mod.Flour,
+            Mod.Egg,
+            Mod.Cheese,
+            Mod.Onion,
+            Mod.Water
         };
         public override HashSet<Process> RequiredProcesses => new HashSet<Process>
         {
-            (Process)GDOUtils.GetExistingGDO(Mod.CookID),
-            (Process)GDOUtils.GetExistingGDO(Mod.ChopID)
+            Mod.Cook,
+            Mod.Chop
         };
         public override HashSet<Dish> PrerequisiteDishesEditor => new HashSet<Dish>
         {
-            (Dish)GDOUtils.GetExistingGDO(Mod.PastaBaseID)
+            Mod.PastaBase
         };
         public override List<Unlock> HardcodedRequirements => new List<Unlock>
         {
-            (Unlock)GDOUtils.GetExistingGDO(Mod.PastaBaseID)
+            Mod.PastaBase
         };
     }
 }
