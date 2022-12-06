@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
-		<RootNamespace>YariazenCore</RootNamespace>
+		<RootNamespace>PastaPalace</RootNamespace>
 		<LibraryPath>D:\Program Files (x86)\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed</LibraryPath>
 		<ModsPath>D:\Program Files (x86)\Steam\steamapps\common\PlateUp\PlateUp\Mods</ModsPath>
 		<BepInExPath>D:\Program Files (x86)\Steam\steamapps\common\PlateUp\PlateUp\BepInEx</BepInExPath>

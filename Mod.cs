@@ -4,7 +4,7 @@ using KitchenData;
 using KitchenLib;
 using KitchenLib.Customs;
 using KitchenLib.Event;
-using KitchenLib.Reference;
+using KitchenLib.References;
 using KitchenLib.Utils;
 using PastaPalace.Customs.NoodleChain;
 using PastaPalace.Customs.PastaProcess;
@@ -40,37 +40,56 @@ namespace PastaPalace
         public const string MOD_NAME = "Pasta Palace";
         public const string MOD_VERSION = "0.0.1";
 
-        internal static int FlourID = KitchenLib.Reference.ItemReference.Flour;
-        internal static int EggCrackedID = KitchenLib.Reference.ItemReference.EggCracked;
-        internal static int WaterID = KitchenLib.Reference.ItemReference.Water;
-        internal static int PotID = KitchenLib.Reference.ItemReference.Pot;
-        internal static int OnionID = KitchenLib.Reference.ItemReference.Onion;
-        internal static int TomatoSauceID = KitchenLib.Reference.ItemReference.TomatoSauce;
-        internal static int CheeseID = KitchenLib.Reference.ItemReference.Cheese;
-        internal static int BroccoliChoppedContainerCookedID = KitchenLib.Reference.ItemReference.BroccoliChoppedContainerCooked;
-        internal static int MeatChoppedContainerCookedID = KitchenLib.Reference.ItemReference.MeatChoppedContainerCooked;
-        internal static int PlateID = KitchenLib.Reference.ItemReference.Plate;
-        internal static int EggID = KitchenLib.Reference.ItemReference.Egg;
-        internal static int TomatoID = KitchenLib.Reference.ItemReference.Tomato;
+        internal static Item Flour => GetExistingGDO<Item>(ItemReferences.Flour);
+        internal static Item EggCracked => GetExistingGDO<Item>(ItemReferences.EggCracked);
+        internal static Item Water => GetExistingGDO<Item>(ItemReferences.Water);
+        internal static Item Pot => GetExistingGDO<Item>(ItemReferences.Pot);
+        internal static Item Onion => GetExistingGDO<Item>(ItemReferences.Onion);
+        internal static Item TomatoSauce => GetExistingGDO<Item>(ItemReferences.TomatoSauce);
+        internal static Item Cheese => GetExistingGDO<Item>(ItemReferences.Cheese);
+        internal static Item BroccoliChoppedContainerCooked => GetExistingGDO<Item>(ItemReferences.BroccoliChoppedContainerCooked);
+        internal static Item MeatChoppedContainerCooked => GetExistingGDO<Item>(ItemReferences.MeatChoppedContainerCooked);
+        internal static Item Plate => GetExistingGDO<Item>(ItemReferences.Plate);
+        internal static Item Egg => GetExistingGDO<Item>(ItemReferences.Egg);
+        internal static Item Tomato => GetExistingGDO<Item>(ItemReferences.Tomato);
 
-        internal static int CookID = ProcessReference.Cook;
-        internal static int ChopID = ProcessReference.Chop;
+        internal static Process Cook => GetExistingGDO<Process>(ProcessReferences.Cook);
+        internal static Process Chop => GetExistingGDO<Process>(ProcessReferences.Chop);
 
-        internal static CustomItem CookedNoodles;
+        internal static int RawNoodlesID;
+        internal static int RawNoodlePotID;
+        internal static int CookedNoodlesID;
+        internal static int CookedNoodlePotID;
+        internal static int BurntNoodlePotID;
+        internal static ItemGroup RawNoodles;
+        internal static ItemGroup RawNoodlePot;
+        internal static Item CookedNoodles;
+        internal static Item CookedNoodlePot;
+        internal static Item BurntNoodlePot;
 
         internal static int UncookedRedSauceID;
-        internal static int CookedRedSauceID;
         internal static int ServedRedSauceID;
+        internal static int CookedRedSauceID;
+        internal static ItemGroup UncookedRedSauce;
+        internal static Item ServedRedSauce;
+        internal static Item CookedRedSauce;
 
         internal static int UncookedWhiteSauceID;
-        internal static int CookedWhiteSauceID;
         internal static int ServedWhiteSauceID;
+        internal static int CookedWhiteSauceID;
+        internal static ItemGroup UncookedWhiteSauce;
+        internal static Item ServedWhiteSauce;
+        internal static Item CookedWhiteSauce;
 
         internal static int PlatedPastaID;
         internal static int PastaBaseID;
         internal static int PastaWhiteID;
+        internal static ItemGroup PlatedPasta;
+        internal static Dish PastaBase;
+        internal static Dish PastaWhite;
 
-        public static AssetBundle bundle;
+        internal static GameData gamedata;
+        internal static AssetBundle bundle;
 
         public Mod() : base($">={MOD_VERSION}", Assembly.GetCallingAssembly())
         {
@@ -78,10 +97,10 @@ namespace PastaPalace
             //bundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "pastapalacetextures"));
             Debug.Log($"Loaded Textures: {bundle != null}");
 
-            Events.AfterGDORegisterEvent += AfterGDORegisterEvent;
+            Events.BuildGameDataEvent += OnBuildGameDataEvent;
         }
 
-        void Awake()
+        void Start()
         {
             /* 
             * Noodle Chain:
@@ -89,33 +108,32 @@ namespace PastaPalace
             * Add water and raw noodle to pot.
             * Cook and portion onto plate. Serves 6.
             */
-            AddGameDataObject<RawNoodles>();
-            AddGameDataObject<CookedNoodles>();
-            AddGameDataObject<RawNoodlePot>();
-            AddGameDataObject<CookedNoodlePot>();
-            AddGameDataObject<BurntNoodlePot>();
+            RawNoodlesID = AddGameDataObject<RawNoodles>().ID;
+            CookedNoodlesID = AddGameDataObject<CookedNoodles>().ID;
+            BurntNoodlePotID = AddGameDataObject<BurntNoodlePot>().ID;
+            RawNoodlePotID = AddGameDataObject<RawNoodlePot>().ID;
+            CookedNoodlePotID = AddGameDataObject<CookedNoodlePot>().ID;
             Debug.Log("Loaded Noodles.");
-
 
             /*
             * Red Sauce Chain
             * Add Onion, Tomato Sauce to pot and cook. 
             * Pour onto cooked noodles. Serves 4.
             */
-            //UncookedRedSauceID = AddGameDataObject<UncookedRedSauce>().ID;
-            //CookedRedSauceID = AddGameDataObject<CookedRedSauce>().ID;
-            //ServedRedSauceID = AddGameDataObject<ServedRedSauce>().ID;
-            //Debug.Log("Loaded Red Sauce.");
+            UncookedRedSauceID = AddGameDataObject<UncookedRedSauce>().ID;
+            CookedRedSauceID = AddGameDataObject<CookedRedSauce>().ID;
+            ServedRedSauceID = AddGameDataObject<ServedRedSauce>().ID;
+            Debug.Log("Loaded Red Sauce.");
 
             /*
             * White Sauce Chain
             * Add Onion, Cheese to pot and cook. 
             * Pour onto cooked noodles. Serves 4.
             */
-            //UncookedWhiteSauceID = AddGameDataObject<UncookedWhiteSauce>().ID;
-            //CookedWhiteSauceID = AddGameDataObject<CookedWhiteSauce>().ID;
-            //ServedWhiteSauceID = AddGameDataObject<ServedWhiteSauce>().ID;
-            //Debug.Log("Loaded White Sauce.");
+            UncookedWhiteSauceID = AddGameDataObject<UncookedWhiteSauce>().ID;
+            CookedWhiteSauceID = AddGameDataObject<CookedWhiteSauce>().ID;
+            ServedWhiteSauceID = AddGameDataObject<ServedWhiteSauce>().ID;
+            Debug.Log("Loaded White Sauce.");
 
             /*
             * Pasta Process:
@@ -123,82 +141,45 @@ namespace PastaPalace
             * Add Red or White Sauce
             * (Optional) Add topping
             * Serve
-             */
-            //PlatedPastaID = AddGameDataObject<PlatedPasta>().ID;
-            //PastaBaseID = AddGameDataObject<PastaBase>().ID;
-            //PastaWhiteID = AddGameDataObject<PastaWhite>().ID;
-            //Debug.Log("Loaded Dish.");
-        }
-
-        private void AfterGDORegisterEvent(object sender, AfterGDORegisterEventArgs e)
-        {
-            List<GameDataObject> gameDataObjects = e.GameDataObjects;
-
-            ItemGroup RawNoodlePot = (ItemGroup)gameDataObjects.FirstOrDefault(a => a.ID == GetHash(MOD_NAME, "RawNoodlePot"));
-            Item RawNoodle = (Item)gameDataObjects.FirstOrDefault(a => a.ID == GetHash(Mod.MOD_NAME, "RawNoodles"));
-            Item CookedNoodlePot = (Item)gameDataObjects.FirstOrDefault(a => a.ID == GetHash(Mod.MOD_NAME, "CookedNoodlePot"));
-            Item CookedNoodles = (Item)gameDataObjects.FirstOrDefault(a => a.ID == GetHash(Mod.MOD_NAME, "CookedNoodles"));
-            Item BurntNoodlePot = (Item)gameDataObjects.FirstOrDefault(a => a.ID == GetHash(Mod.MOD_NAME, "BurntNoodlePot"));
-
-            Debug.Log($"RawNoodlePot:{RawNoodlePot.ID == GetHash(MOD_NAME, "RawNoodlePot")}");
-            Debug.Log($"RawNoodle:{RawNoodle == null}");
-            Debug.Log($"CookedNoodlePot:{CookedNoodlePot == null}");
-            Debug.Log($"CookedNoodles:{CookedNoodles == null}");
-            Debug.Log($"BurntNoodlePot:{BurntNoodlePot == null}");
-
-            FieldInfo sets = ReflectionUtils.GetField<ItemGroup>("Sets");
-            FieldInfo processes = ReflectionUtils.GetField<Item>("Processes");
-
-            sets.SetValue(RawNoodlePot, new List<ItemGroup.ItemSet>
-            {
-                new ItemGroup.ItemSet
-                {
-                    Max = 2,
-                    Min = 2,
-                    Items = new List<Item>
-                    {
-                        (Item)GDOUtils.GetExistingGDO(Mod.WaterID),
-                        RawNoodle
-                    }
-                },
-                new ItemGroup.ItemSet
-                {
-                    Max = 1,
-                    Min = 1,
-                    Items = new List<Item>
-                    {
-                        (Item)GDOUtils.GetExistingGDO(Mod.PotID)
-                    }
-                }
-            });
-
-            /*
-            processes.SetValue(RawNoodlePot, new List<Item.ItemProcess>
-            {
-                new Item.ItemProcess
-                {
-                    Duration = 10,
-                    Process = (Process)GDOUtils.GetExistingGDO(Mod.CookID),
-                    Result = CookedNoodlePot
-                }
-            });
-
-            CookedNoodlePot.SplitSubItem = CookedNoodles;
-            processes.SetValue(CookedNoodlePot, new List<Item.ItemProcess>
-            {
-                new Item.ItemProcess
-                {
-                    Duration = 30,
-                    Process = (Process)GDOUtils.GetExistingGDO(Mod.CookID),
-                    Result = BurntNoodlePot
-                }
-            });
             */
+            PlatedPastaID = AddGameDataObject<PlatedPasta>().ID;
+            PastaBaseID = AddGameDataObject<PastaBase>().ID;
+            PastaWhiteID = AddGameDataObject<PastaWhite>().ID;
+            Debug.Log("Loaded Dish.");
         }
 
-        internal static int GetHash(string ModName, string UniqueNameID)
+        private void OnBuildGameDataEvent(object sender, BuildGameDataEventArgs e)
         {
-            return StringUtils.GetInt32HashCode($"{ModName}:{UniqueNameID}");
+            gamedata = e.gamedata;
+
+            RawNoodles = GetModdedGDO<ItemGroup>(RawNoodlesID);
+            CookedNoodles = GetModdedGDO<Item>(CookedNoodlesID);
+            BurntNoodlePot = GetModdedGDO<Item>(BurntNoodlePotID);
+            RawNoodlePot = GetModdedGDO<ItemGroup>(RawNoodlePotID);
+            CookedNoodlePot = GetModdedGDO<Item>(CookedNoodlePotID);
+
+            UncookedRedSauce = GetModdedGDO<ItemGroup>(UncookedRedSauceID);
+            CookedRedSauce = GetModdedGDO<Item>(CookedRedSauceID);
+            ServedRedSauce = GetModdedGDO<Item>(ServedRedSauceID);
+
+            UncookedWhiteSauce = GetModdedGDO<ItemGroup>(UncookedWhiteSauceID);
+            CookedWhiteSauce = GetModdedGDO<Item>(CookedWhiteSauceID);
+            ServedWhiteSauce = GetModdedGDO<Item>(ServedWhiteSauceID);
+
+            PlatedPasta = GetModdedGDO<ItemGroup>(PlatedPastaID);
+            PastaBase = GetModdedGDO<Dish>(PastaBaseID);
+            PastaWhite = GetModdedGDO<Dish>(PastaWhiteID);
+        }
+
+        internal static T GetModdedGDO<T>(int id) where T: GameDataObject
+        {
+            CustomGDO.GetGameDataObject(id).Convert(Mod.gamedata, out GameDataObject gdo);
+            return (T)gdo;
+        }
+
+        private static T GetExistingGDO<T>(int id) where T: GameDataObject
+        {
+            return (T)GDOUtils.GetExistingGDO(id);
         }
     }
 }
