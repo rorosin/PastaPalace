@@ -70,15 +70,19 @@ namespace PastaPalace
             string bundlePath = "";
 
             if (debug) 
-                bundlePath = Path.Combine(new string[] { Directory.GetParent(Application.dataPath).FullName, "BepInEx", "plugins", "PastaPalace", "assets", "pastapalacetextures" });
+                bundlePath = Path.Combine(new string[] { Directory.GetParent(Application.dataPath).FullName, "Mods", "PastaPalace", "assets", "pastapalacetextures" });
 
-            bundle = AssetBundle.LoadFromFile(bundlePath);
+            
             Debug.Log($"{MOD_NAME} {MOD_VERSION} {MOD_AUTHOR}: Loaded");
         }
 
         protected override void Initialise()
         {
             base.Initialise();
+
+            string bundlePath = Path.Combine(new string[] { Directory.GetParent(Application.dataPath).FullName, "Mods", "PastaPalace", "assets", "pastapalacetextures" });
+            Debug.Log($"{bundlePath}");
+            bundle = AssetBundle.LoadFromFile(bundlePath);
 
             AddGameDataObject<RawNoodles>();
             AddGameDataObject<CookedNoodles>();
